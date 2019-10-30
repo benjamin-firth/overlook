@@ -1,6 +1,32 @@
 /* This is an example of using Sass, otherwise plain CSS works too*/
-$primary-background: pink;
+*{
+  font-family: 'Open Sans';
+  margin: 0;
+  padding: 0;
+}
 
 body {
-  background-color: $primary-background;
+  display: grid;
+  grid-template-columns: 25% 37.5% 37.5%;
+  grid-template-rows: 8% 92%; 
+  grid-template-areas: 
+    "top top top"
+    "nav main main";
+  height: 100vh;
+}
+
+header {
+  background-color: #5BE1E6;
+  display: flex;
+  grid-area: top;
+}
+
+main {
+  background-color: #545454;
+  grid-area: main;
+}
+
+nav {
+  background-color: #5271FF;
+  grid-area: nav;
 }
