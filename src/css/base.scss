@@ -23,7 +23,7 @@ header {
 
 main {
   align-items: center;
-  background: url(../images/scooby-doo.jpg);
+  // background: url(../images/scooby-doo.jpg);
   display: flex;
   justify-content: center;
   opacity: 0.9;
@@ -46,6 +46,10 @@ button {
   border-radius: 10%;
   padding: 5px 15px;
   margin: 10px;
+}
+
+.error {
+  color: red;
 }
 
 
