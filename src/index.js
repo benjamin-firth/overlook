@@ -8,6 +8,19 @@ import $ from 'jquery';
 import './css/base.scss';
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
-import './images/turing-logo.png'
+import './images/scooby-doo.jpg'
 
 console.log('This is the JavaScript entry file - your code begins here.');
+
+
+$('.login').on('click', function(e) {
+  e.preventDefault();
+  let userName = $('.username').value;
+  console.log(userName);
+  if (userName === 'manager') {
+    window.location = "./manager-deck.html";
+  } else {
+    window.location = "./user-deck.html";
+  }
+});
+

@@ -7,26 +7,45 @@
 
 body {
   display: grid;
-  grid-template-columns: 25% 37.5% 37.5%;
+  grid-template-columns: 100%;
   grid-template-rows: 8% 92%; 
   grid-template-areas: 
-    "top top top"
-    "nav main main";
+  "top"
+  "main";
   height: 100vh;
 }
 
 header {
-  background-color: #5BE1E6;
+  background-color: rgba(0, 0, 0, 0.9);
   display: flex;
   grid-area: top;
 }
 
 main {
-  background-color: #545454;
+  align-items: center;
+  background: url(../images/scooby-doo.jpg);
+  display: flex;
+  justify-content: center;
+  opacity: 0.9;
+}
+
+h1 {
+  color: #f0a243;
+}
+
+main {
+  background-color: rgba(0, 0, 0, 0.8);
   grid-area: main;
 }
 
-nav {
-  background-color: #5271FF;
-  grid-area: nav;
+label {
+  color: #f0a243;
 }
+
+button {
+  border-radius: 10%;
+  padding: 5px 15px;
+  margin: 10px;
+}
+
+
