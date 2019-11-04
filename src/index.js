@@ -58,10 +58,10 @@ function login(e) {
   }
   if ($('.username').val() === 'manager') {
     manager = new Manager({ id: 1, name: 'Betsy' }, userData, bookingData, roomData);
-    // const totalRooms = manager.findTotalRoomsForDate(hotel.today);
     currentPage = 'Manager Page';
     renderPage();
   } else {
+    customer = new Customer({ id: 7, name: 'Dell Rath' }, userData, bookingData, roomData);
     currentPage = 'Customer Page';
     renderPage();
   }
@@ -117,13 +117,28 @@ function renderWelcomePage() {
 }
 
 function renderCustomerPage() {
+  let myBookings = customer.findCustomerBookings(customer.id);
+  let mySpending = customer.findTotalSpent();
+  showBookings();
   $('main').html(`
-    <section>
-     <h2>My Room Bookings</h2>
+    <section class="manager-widget booking-list" style="overflow: scroll">
+      <h2>Bookings I've Made</h2>
     </section>
-    <section>
-      <h2>Total Amount Spent</h2>
-    </section> 
-    <button>Return to Main Page</button> 
+    <section class="manager-widget">
+      <h2>Amount I've Spent</h2>
+      <h1>${mySpending}<h1>
+    </section>
+    <button class="login-return">Return to Main Page</button> 
   `)
+  showBookings();
+}
+
+function showBookings() {
+  let myBookings = customer.findMyBookings();
+  myBookings.forEach(booking => {
+    $('.booking-list').append(`
+      <h2>${booking.date}</h2>
+      <h3>Room ${booking.roomNumber}</h3>
+    `)
+  })
 }
