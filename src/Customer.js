@@ -7,4 +7,24 @@ export default class Customer extends Hotel {
     this.name = user.name;
     this.password = user.password || 'overlook2019';
   }
+
+  findMyBookings() {
+    let myBookings = this.findCustomerBookings(this.id);
+    return myBookings.map(booking => {
+      return { date: booking.date, roomNumber: booking.roomNumber };
+    }) 
+  }
+
+  findTotalSpent() {
+    let myBookings = this.findCustomerBookings(this.id);
+    let myBookedRooms = myBookings.map(booking => {
+      return this.rooms.find(room => {
+        return room.number === booking.roomNumber;
+      })
+    })
+    return myBookedRooms.reduce((acc, bookedRoom) => {
+      acc = acc + bookedRoom.costPerNight
+      return acc;
+    }, 0)
+  }
 }
