@@ -24,7 +24,7 @@ export default class Manager extends Hotel {
       acc = acc + bookedRoom.costPerNight
       return acc;
     }, 0)
-    return parseFloat(revenue).toFixed(2);
+    return parseFloat(revenue.toFixed(2));
   }
 
   findPercentageOfRoomsOccupied(date) {
