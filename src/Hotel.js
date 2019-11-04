@@ -22,4 +22,8 @@ export default class Hotel {
     var yyyy = String(today.getFullYear());
     return yyyy + '/' + mm + '/' + dd;
   }
+
+  findCustomerBookings(id) {
+    return this.bookings.filter(booking => booking.userID === id) 
+  }
 }
