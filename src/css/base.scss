@@ -1,4 +1,5 @@
-/* This is an example of using Sass, otherwise plain CSS works too*/
+@import '~flatpickr/dist/flatpickr.css';
+
 *{
   font-family: 'Open Sans';
   margin: 0;
@@ -68,9 +69,9 @@ button {
   background-color: white;
   border-radius: 8%;
   height: 38%;
-  margin: 5% 8%;
+  margin: 5% 2%;
   padding: 4%;
-  width: 25%;
+  width: 20%;
 }
 
 .customer-widget {
@@ -90,4 +91,11 @@ button {
 .booking-list {
   height: 90%;
   overflow-y: scroll
+}
+
+#datepicker {
+  border-radius: 4%;
+  font-size: 1.1em;
+  height: 1.25em;
+  width: 80%;
 }

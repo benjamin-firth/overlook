@@ -6,6 +6,7 @@ import $ from 'jquery';
 
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/base.scss';
+import flatpickr from "flatpickr";
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/scooby-doo.jpg'
@@ -101,14 +102,14 @@ function renderManagerPage() {
 
 function renderWelcomePage() {
   $('main').html(`
-    <form>
+    <form type="text">
     <div>
-      <label>Username:</label>
-      <input class="username" name="Username" placeholder="Username" value="manager"></input>
+      <label for="username-input">Username:</label>
+      <input class="username" id="username-input" name="Username" placeholder="Username" value="manager"></input>
     </div>
     <div>
-      <label>Password:</label>
-      <input class="password" name="Password" placeholder="Password" value="overlook2019"></input>
+      <label for="password-input">Password:</label>
+      <input class="password" name="Password" placeholder="Password" id="password-input" value="overlook2019"></input>
     </div>
     <button class="login">Enter Information</button>
     <p class="login-error"></p>
@@ -117,7 +118,6 @@ function renderWelcomePage() {
 }
 
 function renderCustomerPage() {
-  let myBookings = customer.findCustomerBookings(customer.id);
   let mySpending = customer.findTotalSpent();
   showBookings();
   $('main').html(`
@@ -129,10 +129,17 @@ function renderCustomerPage() {
     </section>
     <section class="customer-widget" >
       <h2 class="widget-title">Amount I've Spent</h2>
-      <h1>$${mySpending}<h1>
+      <h1>$${mySpending}</h1>
+    </section>
+    <section class="customer-widget" >
+      <h2 class="widget-title">Make a Booking</h2>
+      <form type="text">
+        <input name="calendar" id="datepicker" placeholder="Select a Date"></input>
+      </form>
     </section>
     <button class="login-return">Return to Main Page</button> 
   `)
+  addDatePicker();
   showBookings();
 }
 
@@ -145,3 +152,9 @@ function showBookings() {
     `)
   })
 }
+
+function addDatePicker() {
+  flatpickr("#datepicker", {
+    dateFormat: "Y/m/d"
+  });
+} 
