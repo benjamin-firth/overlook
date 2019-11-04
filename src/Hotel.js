@@ -16,6 +16,18 @@ export default class Hotel {
   }
 
   findCustomerBookings(id) {
-    return this.bookings.filter(booking => booking.userID === id) 
+    return this.bookings.filter(booking => booking.userID === id);
+  }
+
+  findAvailableRooms(date) {
+    let todaysBookings = this.bookings.filter(booking => booking.date === date);
+    let availableRooms = this.rooms.reduce((acc, room) => {
+      if (!todaysBookings.some(booking => 
+        booking.roomNumber === room.number)) {
+          acc.push(room);
+        }
+      return acc;
+    }, []);
+    return availableRooms;
   }
 }
