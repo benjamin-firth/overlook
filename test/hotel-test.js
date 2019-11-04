@@ -33,7 +33,7 @@ describe('Hotel Class testing', function() {
         {
           id: 1572293130159,
           userID: 1,
-          date: "2019/11/15",
+          date: "2019/11/22",
           roomNumber: 4,
           roomServiceCharges: [ ]
         },
@@ -135,7 +135,7 @@ describe('Hotel Class testing', function() {
         {
           id: 1572293130159,
           userID: 1,
-          date: "2019/11/15",
+          date: "2019/11/22",
           roomNumber: 4,
           roomServiceCharges: [ ]
         },
@@ -149,4 +149,9 @@ describe('Hotel Class testing', function() {
       ]
     );
   })
+  
+  it('should return available rooms for a date', function() {
+    expect(hotel.findAvailableRooms('2019/11/22')).have.length(3);
+  })
+
 });
