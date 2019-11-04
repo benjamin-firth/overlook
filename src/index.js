@@ -121,11 +121,11 @@ function renderCustomerPage() {
   let mySpending = customer.findTotalSpent();
   showBookings();
   $('main').html(`
-    <section class="manager-widget booking-list" style="overflow: scroll">
-      <h2>Bookings I've Made</h2>
+    <section class="customer-widget booking-list" style="overflow: scroll">
+      <h2 class="widget-title">Bookings I've Made</h2>
     </section>
-    <section class="manager-widget">
-      <h2>Amount I've Spent</h2>
+    <section class="customer-widget">
+      <h2 class="widget-title">Amount I've Spent</h2>
       <h1>${mySpending}<h1>
     </section>
     <button class="login-return">Return to Main Page</button> 
