@@ -86,11 +86,12 @@ button {
 
 .booking-scroll {
   height: 100%;
+  margin-top: 1%;
 }
 
 .booking-list {
   height: 90%;
-  overflow-y: scroll
+  overflow-y: scroll;
 }
 
 #datepicker {
@@ -98,4 +99,23 @@ button {
   font-size: 1.1em;
   height: 1.25em;
   width: 80%;
+}
+
+// Make Booking Page 
+
+.booking-widget {
+  @extend .manager-widget;
+  height: 62%;
+  width: 35%;
+  button {
+    margin-bottom: 8%;
+  }
+}
+
+.available-list {
+  @extend .booking-list;
+}
+
+.widget-title {
+  text-align: center;
 }
