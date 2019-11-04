@@ -20,10 +20,11 @@ export default class Manager extends Hotel {
         return room.number === booking.roomNumber;
       })
     })
-    return bookedRooms.reduce((acc, bookedRoom) => {
+    let revenue = bookedRooms.reduce((acc, bookedRoom) => {
       acc = acc + bookedRoom.costPerNight
       return acc;
     }, 0)
+    return parseFloat(revenue).toFixed(2);
   }
 
   findPercentageOfRoomsOccupied(date) {
