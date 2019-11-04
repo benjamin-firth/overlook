@@ -11,6 +11,11 @@ import './css/base.scss';
 import './images/scooby-doo.jpg'
 
 import Hotel from './Hotel';
+import Manager from './Manager';
+import Customer from './Customer';
+
+let currentPage = 'Welcome Page';
+
 
 let userData = 
   fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/users/users')
@@ -30,7 +35,9 @@ let roomData =
   .then(data => data.rooms)
   .catch(err => console.log(err));
 
-let hotel;
+var hotel;
+var manager;
+var customer;
 
 Promise.all([userData, bookingData, roomData])
   .then(allData => {
@@ -38,10 +45,10 @@ Promise.all([userData, bookingData, roomData])
     bookingData = allData[1];
     roomData = allData[2];
     hotel = new Hotel(userData, bookingData, roomData);
-    console.log(hotel);
   })
 
 $('.login').on('click', login);
+$('.login-return').on('click', console.log({hotel}));
 
 function login(e) {
   e.preventDefault();
@@ -50,8 +57,73 @@ function login(e) {
     return $('.login-error').text('Password Incorrect!').addClass('error');
   }
   if ($('.username').val() === 'manager') {
-    window.location = "./manager-deck.html";
+    manager = new Manager({ id: 1, name: 'Betsy' }, userData, bookingData, roomData);
+    // const totalRooms = manager.findTotalRoomsForDate(hotel.today);
+    currentPage = 'Manager Page';
+    renderPage();
   } else {
-    window.location = "./user-deck.html";
+    currentPage = 'Customer Page';
+    renderPage();
   }
+}
+
+function renderPage() {
+  if (currentPage === 'Welcome Page') {
+    renderWelcomePage();
+  } else if (currentPage === 'Manager Page') {
+    renderManagerPage();
+  } else if (currentPage === 'Customer Page') {
+    renderCustomerPage();
+  }
+}
+
+function renderManagerPage() {
+  let today = manager.getToday();
+  let todaysRooms = manager.findTotalRoomsForDate(today);
+  let todaysRevenue = manager.findTotalRevenueForDate(today);
+  let percentFilled = manager.findPercentageOfRoomsOccupied(today);
+  $('main').html(`
+    <section class="manager-widget">
+      <h2>Total Rooms Available</h2>
+      <h1>${todaysRooms}<h1>
+    </section>>
+    <section class="manager-widget">
+      <h2>Total Revenue</h2>
+      <h1>$${todaysRevenue}<h1>
+    </section>
+    <section class="manager-widget">
+      <h2>Percentage Rooms Occupied</h2>
+      <h1>${percentFilled}%<h1>
+    </section>
+    <button class="login-return">Return to Main Page</button> 
+  `)
+}
+
+function renderWelcomePage() {
+  $('main').html(`
+    <form>
+    <div>
+      <label>Username:</label>
+      <input class="username" name="Username" placeholder="Username" value="manager"></input>
+    </div>
+    <div>
+      <label>Password:</label>
+      <input class="password" name="Password" placeholder="Password" value="overlook2019"></input>
+    </div>
+    <button class="login">Enter Information</button>
+    <p class="login-error"></p>
+    </form>
+  `)
+}
+
+function renderCustomerPage() {
+  $('main').html(`
+    <section>
+     <h2>My Room Bookings</h2>
+    </section>
+    <section>
+      <h2>Total Amount Spent</h2>
+    </section> 
+    <button>Return to Main Page</button> 
+  `)
 }
