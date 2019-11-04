@@ -41,15 +41,17 @@ var manager;
 var customer;
 
 Promise.all([userData, bookingData, roomData])
-  .then(allData => {
-    userData = allData[0];
-    bookingData = allData[1];
-    roomData = allData[2];
-    hotel = new Hotel(userData, bookingData, roomData);
-  })
+.then(allData => {
+  userData = allData[0];
+  bookingData = allData[1];
+  roomData = allData[2];
+  hotel = new Hotel(userData, bookingData, roomData);
+})
 
 $('.login').on('click', login);
-$('.login-return').on('click', console.log({hotel}));
+// $('.login-return').click(console.log({hotel}));
+// $('.find-rooms').click(console.log('FIRING YUS'));
+
 
 function login(e) {
   e.preventDefault();
@@ -75,6 +77,8 @@ function renderPage() {
     renderManagerPage();
   } else if (currentPage === 'Customer Page') {
     renderCustomerPage();
+  } else if (currentPage === 'Booking Page') {
+    renderBookingPage();
   }
 }
 
@@ -96,7 +100,7 @@ function renderManagerPage() {
       <h2>Percentage Rooms Occupied</h2>
       <h1>${percentFilled}%<h1>
     </section>
-    <button class="login-return">Return to Main Page</button> 
+    <button class="login-return">Logout</button> 
   `)
 }
 
@@ -135,12 +139,30 @@ function renderCustomerPage() {
       <h2 class="widget-title">Make a Booking</h2>
       <form type="text">
         <input name="calendar" id="datepicker" placeholder="Select a Date"></input>
+        <button type="button" id="find-rooms" class="find-rooms">Find Available Rooms</button>
       </form>
     </section>
-    <button class="login-return">Return to Main Page</button> 
-  `)
+    <button class="login-return">Logout</button>`);
+    $('#find-rooms').click(showAvailableRooms);
   addDatePicker();
   showBookings();
+}
+
+function showAvailableRooms() {
+  currentPage = 'Booking Page';
+  renderPage();
+}
+
+function renderBookingPage() {
+  $('main').html(`
+    <section class="booking-widget">
+      <h2 class="widget-title">Available Rooms</h2>
+      <div class="booking-scroll">
+        <ul class="available-list"></ul>
+      </div>
+    </section>> 
+  `)
+  showAvailableRoomInfo();
 }
 
 function showBookings() {
@@ -149,6 +171,20 @@ function showBookings() {
     $('.booking-list').append(`
       <h2>${booking.date}</h2>
       <h3>Room ${booking.roomNumber}</h3>
+    `)
+  })
+}
+
+function showAvailableRoomInfo() {
+  let openRooms = customer.findAvailableRooms(customer.getToday());
+  openRooms.forEach(room => {
+    $('.available-list').append(`
+    <h3>Room Number: ${room.number}</h3>
+    <h3>Room Type: ${room.roomType}</h3>
+    <h3>Bed Size: ${room.bedSize}</h3>
+    <h3>Number of Beds: ${room.numBeds}</h3>
+    <h3>Nightly Price: $${room.costPerNight}</h3>
+    <button type="button">Book this Room</button>
     `)
   })
 }
