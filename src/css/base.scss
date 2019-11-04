@@ -82,3 +82,12 @@ button {
 .widget-title {
   margin-bottom: 5%; 
 }
+
+.booking-scroll {
+  height: 100%;
+}
+
+.booking-list {
+  height: 90%;
+  overflow-y: scroll
+}
