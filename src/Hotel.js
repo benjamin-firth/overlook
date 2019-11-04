@@ -7,14 +7,6 @@ export default class Hotel {
     this.currentUser;
   }
 
-  // login(user, type) {
-  //   if (type === 'customer') {
-  //     const customer = new Customer(user);
-  //   } else if (type === 'manager'){
-  //     this.currentUser = 
-  //   }
-  // }
-
   getToday() {
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
