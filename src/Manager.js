@@ -36,4 +36,8 @@ export default class Manager extends Hotel {
     })
     return bookedRooms.length / this.rooms.length * 100;
   }
+
+  findUserID(name) {
+    return this.users.find(user => user.name === name).id;
+  }
 }
