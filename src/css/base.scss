@@ -44,6 +44,7 @@ label {
 button {
   align-self: flex-end;
   border-radius: 10%;
+  cursor: pointer;
   padding: 5px 15px;
   margin: 10px;
 }
@@ -87,7 +88,7 @@ button {
 .manager-widget {
   background-color: white;
   border-radius: 8%;
-  height: 38%;
+  height: 20%;
   margin: 2%;
   padding: 3%;
   width: 21%;

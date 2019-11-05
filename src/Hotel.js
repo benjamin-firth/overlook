@@ -5,6 +5,7 @@ export default class Hotel {
     this.rooms = rooms;
     this.today = this.getToday();
     this.currentUser;
+    this.date;
   }
 
   getToday() {

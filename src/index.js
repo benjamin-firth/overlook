@@ -99,7 +99,10 @@ function renderManagerPage() {
       <h2>Percentage Rooms Occupied</h2>
       <h1>${percentFilled}%<h1>
     </section>
-    <button class="login-return">Logout</button> 
+    <section class="manager-widget">
+      <h2>Search for Customer</h2>
+      <h1>Hello!<h1>
+    </section>
   `)
 }
 
