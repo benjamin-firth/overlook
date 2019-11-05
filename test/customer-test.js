@@ -167,7 +167,7 @@ describe('Customer Class testing', function() {
   })
 
   it('should show total money spent from all bookings for user', function() {
-    expect(customer.findTotalSpent()).to.equal(787.8399999999999);
+    expect(customer.findTotalSpent()).to.equal(787.84);
   })
 
   
