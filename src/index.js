@@ -78,6 +78,8 @@ function renderPage(dateSelected) {
     renderCustomerPage();
   } else if (currentPage === 'Booking Page') {
     renderBookingPage(dateSelected);
+  } else if (currentPage === 'Customer Page Manager View') {
+    renderManagerCustomerPage();
   }
 }
 
@@ -101,7 +103,11 @@ function renderManagerPage() {
     </section>
     <section class="manager-widget">
       <h2>Search for Customer</h2>
-      <h1>Hello!<h1>
+      <div>
+        <label for="customer-name">Customer Name:</label>
+        <input class="username" id="customer-name" name="Username"></input>
+      </div>
+      <button id="find-customer-info">Find Customer Info</button>
     </section>
   `)
 }
@@ -149,6 +155,32 @@ function renderCustomerPage() {
   showBookings();
 }
 
+function renderManagerCustomerPage() {
+  let mySpending = customer.findTotalSpent();
+  $('main').html(`
+    <section class="customer-widget">
+      <h2 class="widget-title">Bookings I've Made</h2>
+      <div class="booking-scroll">
+        <ul class="booking-list"></ul>
+      </div>
+    </section>
+    <section class="customer-widget">
+      <h2 class="widget-title">Amount I've Spent</h2>
+      <h1>$${mySpending}</h1>
+    </section>
+    <section class="customer-widget">
+      <h2 class="widget-title">Make a Booking</h2>
+      <form type="text">
+        <input name="calendar" id="datepicker" placeholder="Select a Date"></input>
+        <button type="button" id="find-rooms" class="find-rooms">Find Available Rooms</button>
+      </form>
+    </section>
+    <button class="login-return">Logout</button>`);
+    // $('#find-rooms').click(showAvailableRooms);
+  addDatePicker();
+  showBookings('manager');
+}
+
 function showAvailableRooms() {
   let dateSelected = $('#datepicker').val();
   customer.date = $('#datepicker').val();
@@ -179,14 +211,24 @@ function renderBookingPage(dateSelected) {
 }
 
 
-function showBookings() {
+function showBookings(userType) {
   let myBookings = customer.findMyBookings();
-  myBookings.forEach(booking => {
-    $('.booking-list').append(`
-    <h2>${booking.date}</h2>
-    <h3>Room ${booking.roomNumber}</h3>
-    `)
-  })
+  if (userType === 'manager') {
+    myBookings.forEach(booking => {
+      $('.booking-list').append(`
+      <h2>${booking.date}</h2>
+      <h3>Room ${booking.roomNumber}</h3>
+      <button class="delete-booking">Delete Booking</button>
+      `)
+    })
+  } else {
+    myBookings.forEach(booking => {
+      $('.booking-list').append(`
+      <h2>${booking.date}</h2>
+      <h3>Room ${booking.roomNumber}</h3>
+      `)
+    })
+  }
 }
 
 function showAvailableRoomInfo(dateSelected) {
@@ -261,6 +303,13 @@ function postNewBooking(id, date, room) {
   .catch(err => console.log(err));
 }
 
+function goToCustomerInfo(name) {
+  let userID = manager.findUserID(name);
+  customer = new Customer({ id: userID, name: name }, userData, bookingData, roomData);
+  currentPage = 'Customer Page Manager View';
+  renderPage();
+}
+
 function fireClickEvents() {
   if (event.target.id === 'filter-rooms') {
     findFilterChoice();
@@ -269,5 +318,8 @@ function fireClickEvents() {
     getRoomToBook(paramTarget);
   } else if (event.target.id === 'find-rooms') {
     showAvailableRooms();
-  } 
+  } else if (event.target.id === 'find-customer-info') {
+    let name = $('#customer-name').val();
+    goToCustomerInfo(name);
+  }
 }
