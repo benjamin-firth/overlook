@@ -49,9 +49,7 @@ Promise.all([userData, bookingData, roomData])
 })
 
 $('.login').on('click', login);
-// $('.login-return').click(console.log({hotel}));
-// $('.find-rooms').click(console.log('FIRING YUS'));
-
+// Listen on the form for change, but also address why radio buttons won't un-click.
 
 function login(e) {
   e.preventDefault();
@@ -70,7 +68,7 @@ function login(e) {
   }
 }
 
-function renderPage() {
+function renderPage(dateSelected) {
   if (currentPage === 'Welcome Page') {
     renderWelcomePage();
   } else if (currentPage === 'Manager Page') {
@@ -78,7 +76,7 @@ function renderPage() {
   } else if (currentPage === 'Customer Page') {
     renderCustomerPage();
   } else if (currentPage === 'Booking Page') {
-    renderBookingPage();
+    renderBookingPage(dateSelected);
   }
 }
 
@@ -123,7 +121,6 @@ function renderWelcomePage() {
 
 function renderCustomerPage() {
   let mySpending = customer.findTotalSpent();
-  showBookings();
   $('main').html(`
     <section class="customer-widget">
       <h2 class="widget-title">Bookings I've Made</h2>
@@ -149,20 +146,30 @@ function renderCustomerPage() {
 }
 
 function showAvailableRooms() {
+  let dateSelected = $('#datepicker').val();
   currentPage = 'Booking Page';
-  renderPage();
+  renderPage(dateSelected);
 }
 
-function renderBookingPage() {
+function renderBookingPage(dateSelected) {
   $('main').html(`
     <section class="booking-widget">
       <h2 class="widget-title">Available Rooms</h2>
+      <h3>Select Room by Style:</h3>
+      <form>
+        <input name="radio-button" type="radio" data-name="single room">Single Room</input>
+        <input name="radio-button" type="radio" data-name="junior suite">Junior Suite</input>
+        <input name="radio-button" type="radio" data-name="residential suite">Residential Suite</input>
+        <input name="radio-button" type="radio" data-name="suite">Suite</input>
+        <button id="filter-rooms" type="button">Filter Rooms</button>
+      </form>
       <div class="booking-scroll">
         <ul class="available-list"></ul>
       </div>
     </section>> 
   `)
-  showAvailableRoomInfo();
+  showAvailableRoomInfo(dateSelected);
+  $('#filter-rooms').click(findFilterChoice);
 }
 
 function showBookings() {
@@ -175,9 +182,24 @@ function showBookings() {
   })
 }
 
-function showAvailableRoomInfo() {
-  let openRooms = customer.findAvailableRooms(customer.getToday());
-  openRooms.forEach(room => {
+function showAvailableRoomInfo(dateSelected) {
+  customer.selectedDateRooms = customer.findAvailableRooms(dateSelected);
+  customer.selectedDateRooms.forEach(room => {
+    $('.available-list').append(`
+    <h3>Room Number: ${room.number}</h3>
+    <h3>Room Type: ${room.roomType}</h3>
+    <h3>Bed Size: ${room.bedSize}</h3>
+    <h3>Number of Beds: ${room.numBeds}</h3>
+    <h3>Nightly Price: $${room.costPerNight}</h3>
+    <button type="button">Book this Room</button>
+    `)
+  })
+}
+
+function filterRooms(unfilteredRooms, type) {
+  let filteredRooms = unfilteredRooms.filter(room => room.roomType === type);
+  $('.available-list').html('');
+  filteredRooms.forEach(room => {
     $('.available-list').append(`
     <h3>Room Number: ${room.number}</h3>
     <h3>Room Type: ${room.roomType}</h3>
@@ -194,3 +216,8 @@ function addDatePicker() {
     dateFormat: "Y/m/d"
   });
 } 
+
+function findFilterChoice() {
+  let roomType = $('input[name=radio-button]:checked').attr('data-name');
+  filterRooms(customer.selectedDateRooms, roomType);
+}
