@@ -44,12 +44,43 @@ label {
 button {
   align-self: flex-end;
   border-radius: 10%;
+  cursor: pointer;
   padding: 5px 15px;
   margin: 10px;
 }
 
+// WELCOME PAGE
+
 .error {
   color: red;
+}
+
+.welcome-widget {
+  background-color: black;
+  border-radius: 9%;
+  display: flex;
+  flex-wrap: wrap;
+  height: 20%;
+  justify-content: space-between;
+  padding: 3em;
+  width: 40%;
+  button {
+    border-radius: 0%;
+    font-size: 1em;
+    margin: 10px 0 10px 0;
+    width: 100%;
+  }
+}
+
+.display-row {
+  display: flex;
+  flex-direction: column;
+  width: 46%;
+  input {
+    font-size: 1em;
+    height: 2.5em;
+    margin-top: 5px;
+  }
 }
 
 // MANAGER PAGE STYLING
@@ -57,7 +88,7 @@ button {
 .manager-widget {
   background-color: white;
   border-radius: 8%;
-  height: 38%;
+  height: 20%;
   margin: 2%;
   padding: 3%;
   width: 21%;
@@ -123,4 +154,11 @@ button {
 
 .widget-title {
   text-align: center;
+}
+
+.return-customer {
+  border-radius: 0%;
+  font-size: 1em;
+  margin: 10px 0 10px 0;
+  width: 100%;
 }

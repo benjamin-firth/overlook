@@ -142,4 +142,8 @@ describe('Manager class testing', function() {
   it('should find percentage of occupied rooms on a given date', function() {
     expect(manager.findPercentageOfRoomsOccupied("2019/11/22")).to.equal(40);
   })
+
+  it('should find any user id', function() {
+    expect(manager.findUserID("Kennedi Emard")).to.equal(4);
+  })
 });
