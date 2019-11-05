@@ -6,6 +6,7 @@ export default class Customer extends Hotel {
     this.id = user.id;
     this.name = user.name;
     this.password = user.password || 'overlook2019';
+    this.selectedDateRooms = [];
   }
 
   findMyBookings() {
@@ -22,9 +23,9 @@ export default class Customer extends Hotel {
         return room.number === booking.roomNumber;
       })
     })
-    return myBookedRooms.reduce((acc, bookedRoom) => {
+    return Number(myBookedRooms.reduce((acc, bookedRoom) => {
       acc = acc + bookedRoom.costPerNight
       return acc;
-    }, 0)
+    }, 0).toFixed(2))
   }
 }
