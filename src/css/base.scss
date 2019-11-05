@@ -106,14 +106,19 @@ button {
 .booking-widget {
   @extend .manager-widget;
   height: 62%;
-  width: 35%;
+  width: 50.5%;
   button {
-    margin-bottom: 8%;
+    margin: 0 0 2% 3%;
+  }
+
+  input {
+    margin: 0 1% 0 2%;
   }
 }
 
 .available-list {
   @extend .booking-list;
+  height: 64%;
 }
 
 .widget-title {
