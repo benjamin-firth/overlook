@@ -105,17 +105,17 @@ function renderManagerPage() {
 
 function renderWelcomePage() {
   $('main').html(`
-    <form type="text">
-    <div>
-      <label for="username-input">Username:</label>
-      <input class="username" id="username-input" name="Username" placeholder="Username" value="manager"></input>
-    </div>
-    <div>
-      <label for="password-input">Password:</label>
-      <input class="password" name="Password" placeholder="Password" id="password-input" value="overlook2019"></input>
-    </div>
-    <button class="login">Enter Information</button>
-    <p class="login-error"></p>
+    <form class="welcome-widget" type="text">
+      <div>
+        <label for="username-input">Username:</label>
+        <input class="username" id="username-input" name="Username" placeholder="Username" value="manager"></input>
+      </div>
+      <div>
+        <label for="password-input">Password:</label>
+        <input class="password" name="Password" placeholder="Password" id="password-input" value="overlook2019"></input>
+      </div>
+      <button class="login">Enter Information</button>
+      <p class="login-error"></p>
     </form>
   `)
 }
@@ -148,6 +148,7 @@ function renderCustomerPage() {
 
 function showAvailableRooms() {
   let dateSelected = $('#datepicker').val();
+  customer.date = $('#datepicker').val();
   currentPage = 'Booking Page';
   renderPage(dateSelected);
 }
@@ -197,6 +198,13 @@ function showAvailableRoomInfo(dateSelected) {
     <button class="book-room" type="button" data-number="${room.number}">Book this Room</button>
     `)
   })
+  if (customer.selectedDateRooms.length === 0) {
+    $('.available-list').append(`
+      <h2 class="error">We apologize!</h2>
+      <h3 class="error">It looks like the dungeons are full that day...</h3>
+      <button class="return-customer">Go Back to Where it's a Little Less Spooky...</button>
+    `)
+  }
 }
 
 function filterRooms(unfilteredRooms, type) {
@@ -209,7 +217,7 @@ function filterRooms(unfilteredRooms, type) {
     <h3>Bed Size: ${room.bedSize}</h3>
     <h3>Number of Beds: ${room.numBeds}</h3>
     <h3>Nightly Price: $${room.costPerNight}</h3>
-    <button type="button">Book this Room</button>
+    <button type="button" data-number="${room.number}">Book this Room</button>
     `)
   })
 }
@@ -225,16 +233,37 @@ function findFilterChoice() {
   filterRooms(customer.selectedDateRooms, roomType);
 }
 
-function getRoomToBook() {
-  let chosenRoom = $(this).attr('data-number');
-  console.log(chosenRoom);
+function getRoomToBook(paramTarget) {
+  let chosenRoom = paramTarget.data('number');
+  postNewBooking(customer.id, customer.date, chosenRoom);
+  currentPage = 'Customer Page';
+  renderPage();
+}
+
+function postNewBooking(id, date, room) {
+  console.log(id, date, room);
+  fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      userID: id,
+      date: date,
+      roomNumber: room
+    })
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
 }
 
 function fireClickEvents() {
   if (event.target.id === 'filter-rooms') {
     findFilterChoice();
   } else if ($(event.target).hasClass('book-room')) {
-    getRoomToBook();
+    let paramTarget = $(event.target);
+    getRoomToBook(paramTarget);
   } else if (event.target.id === 'find-rooms') {
     showAvailableRooms();
   } 
