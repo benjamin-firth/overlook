@@ -50,6 +50,7 @@ Promise.all([userData, bookingData, roomData])
 
 $('.login').on('click', login);
 // Listen on the form for change, but also address why radio buttons won't un-click.
+$('body').click(fireClickEvents);
 
 function login(e) {
   e.preventDefault();
@@ -140,7 +141,7 @@ function renderCustomerPage() {
       </form>
     </section>
     <button class="login-return">Logout</button>`);
-    $('#find-rooms').click(showAvailableRooms);
+    // $('#find-rooms').click(showAvailableRooms);
   addDatePicker();
   showBookings();
 }
@@ -169,15 +170,17 @@ function renderBookingPage(dateSelected) {
     </section>> 
   `)
   showAvailableRoomInfo(dateSelected);
-  $('#filter-rooms').click(findFilterChoice);
+  // $('#filter-rooms').click(findFilterChoice);
+  // $('.book-room').click(getRoomToBook)
 }
+
 
 function showBookings() {
   let myBookings = customer.findMyBookings();
   myBookings.forEach(booking => {
     $('.booking-list').append(`
-      <h2>${booking.date}</h2>
-      <h3>Room ${booking.roomNumber}</h3>
+    <h2>${booking.date}</h2>
+    <h3>Room ${booking.roomNumber}</h3>
     `)
   })
 }
@@ -191,7 +194,7 @@ function showAvailableRoomInfo(dateSelected) {
     <h3>Bed Size: ${room.bedSize}</h3>
     <h3>Number of Beds: ${room.numBeds}</h3>
     <h3>Nightly Price: $${room.costPerNight}</h3>
-    <button type="button">Book this Room</button>
+    <button class="book-room" type="button" data-number="${room.number}">Book this Room</button>
     `)
   })
 }
@@ -220,4 +223,19 @@ function addDatePicker() {
 function findFilterChoice() {
   let roomType = $('input[name=radio-button]:checked').attr('data-name');
   filterRooms(customer.selectedDateRooms, roomType);
+}
+
+function getRoomToBook() {
+  let chosenRoom = $(this).attr('data-number');
+  console.log(chosenRoom);
+}
+
+function fireClickEvents() {
+  if (event.target.id === 'filter-rooms') {
+    findFilterChoice();
+  } else if ($(event.target).hasClass('book-room')) {
+    getRoomToBook();
+  } else if (event.target.id === 'find-rooms') {
+    showAvailableRooms();
+  } 
 }
