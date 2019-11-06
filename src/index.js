@@ -260,7 +260,7 @@ function filterRooms(unfilteredRooms, type) {
     <h3>Bed Size: ${room.bedSize}</h3>
     <h3>Number of Beds: ${room.numBeds}</h3>
     <h3>Nightly Price: $${room.costPerNight}</h3>
-    <button type="button" data-number="${room.number}">Book this Room</button>
+    <button type="button" class="book-room" data-number="${room.number}">Book this Room</button>
     `)
   })
 }
