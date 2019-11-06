@@ -89,26 +89,31 @@ function renderManagerPage() {
   let todaysRevenue = manager.findTotalRevenueForDate(today);
   let percentFilled = manager.findPercentageOfRoomsOccupied(today);
   $('main').html(`
-    <section class="manager-widget">
-      <h2>Total Rooms Available</h2>
-      <h1>${todaysRooms}<h1>
-    </section>>
-    <section class="manager-widget">
-      <h2>Total Revenue</h2>
-      <h1>$${todaysRevenue}<h1>
-    </section>
-    <section class="manager-widget">
-      <h2>Percentage Rooms Occupied</h2>
-      <h1>${percentFilled}%<h1>
-    </section>
-    <section class="manager-widget">
-      <h2>Search for Customer</h2>
-      <div>
-        <label for="customer-name">Customer Name:</label>
-        <input class="username" id="customer-name" name="Username"></input>
-      </div>
-      <button id="find-customer-info">Find Customer Info</button>
-    </section>
+    <h2 class="employee-greeting">Welcome Ghastly Employee!</h2>
+    <div class="four-box">
+      <section class="manager-widget">
+        <h2>Total Rooms Available</h2>
+        <h1>${todaysRooms}<h1>
+      </section>>
+      <section class="manager-widget">
+        <h2>Total Revenue</h2>
+        <h1>$${todaysRevenue}<h1>
+      </section>
+    </div> 
+    <div class="four-box">
+      <section class="manager-widget">
+        <h2>Percent Occupied Rooms</h2>
+        <h1>${Math.floor(percentFilled)}%<h1>
+      </section>
+      <section class="manager-widget">
+        <h2>Find Customer</h2>
+        <div>
+          <label for="customer-name">Name:</label>
+          <input class="username" id="customer-name" name="Username"></input>
+        </div>
+        <button id="find-customer-info">Search</button>
+      </section>
+    </div>
   `)
 }
 
@@ -117,7 +122,7 @@ function renderWelcomePage() {
     <form class="welcome-widget" type="text">
       <div>
         <label for="username-input">Username:</label>
-        <input class="username" id="username-input" name="Username" placeholder="Username" value="manager"></input>
+        <input class="username" id="username-input" name="Username" placeholder="Username" value="customer7"></input>
       </div>
       <div>
         <label for="password-input">Password:</label>
@@ -132,24 +137,27 @@ function renderWelcomePage() {
 function renderCustomerPage() {
   let mySpending = customer.findTotalSpent();
   $('main').html(`
-    <section class="customer-widget">
-      <h2 class="widget-title">Bookings I've Made</h2>
+    <section class="customer-widget my-booking">
+      <h2 class="widget-title">MY BOOKINGS</h2>
+      <hr>
       <div class="booking-scroll">
         <ul class="booking-list"></ul>
       </div>
     </section>
-    <section class="customer-widget" >
-      <h2 class="widget-title">Amount I've Spent</h2>
-      <h1>$${mySpending}</h1>
-    </section>
-    <section class="customer-widget" >
-      <h2 class="widget-title">Make a Booking</h2>
-      <form type="text">
-        <input name="calendar" id="datepicker" placeholder="Select a Date"></input>
-        <button type="button" id="find-rooms" class="find-rooms">Find Available Rooms</button>
-      </form>
-    </section>`);
-    // $('#find-rooms').click(showAvailableRooms);
+    <div>
+      <section class="customer-widget my-spending" >
+        <h2 class="widget-title">MY SPENDING</h2>
+        <hr>
+        <h1>$${mySpending}</h1>
+      </section>
+      <section class="customer-widget calendar-widget" >
+        <h2 class="widget-title">MAKE A BOOKING</h2>
+        <form type="text">
+          <input name="calendar" id="datepicker" placeholder="  Select a Date"></input>
+          <button type="button" id="find-rooms" class="find-rooms">Find Available Rooms</button>
+        </form>
+      </section>
+    </div>`);
   addDatePicker();
   showBookings();
 }
@@ -157,24 +165,27 @@ function renderCustomerPage() {
 function renderManagerCustomerPage() {
   let mySpending = customer.findTotalSpent();
   $('main').html(`
-    <section class="customer-widget">
-      <h2 class="widget-title">Bookings I've Made</h2>
+    <section class="customer-widget my-booking">
+      <h2 class="widget-title">CUSTOMER BOOKINGS</h2>
+      <hr>
       <div class="booking-scroll">
         <ul class="booking-list"></ul>
       </div>
     </section>
-    <section class="customer-widget">
-      <h2 class="widget-title">Amount I've Spent</h2>
-      <h1>$${mySpending}</h1>
-    </section>
-    <section class="customer-widget">
-      <h2 class="widget-title">Make a Booking</h2>
-      <form type="text">
-        <input name="calendar" id="datepicker" placeholder="Select a Date"></input>
-        <button type="button" id="find-rooms" class="find-rooms">Find Available Rooms</button>
-      </form>
-    </section>`);
-    // $('#find-rooms').click(showAvailableRooms);
+    <div>
+      <section class="customer-widget my-spending">
+        <h2 class="widget-title">CUSTOMER SPENDING</h2>
+        <hr>
+        <h1>$${mySpending}</h1>
+      </section>
+      <section class="customer-widget calendar-widget">
+        <h2 class="widget-title">MAKE A BOOKING</h2>
+        <form type="text">
+          <input name="calendar" id="datepicker" placeholder="Select a Date"></input>
+          <button type="button" id="find-rooms" class="find-rooms">Find Available Rooms</button>
+        </form>
+      </section>
+    </div>`);
   addDatePicker();
   showBookings('manager');
 }
@@ -198,14 +209,13 @@ function renderBookingPage(dateSelected) {
         <input name="radio-button" type="radio" data-name="suite">Suite</input>
         <button id="filter-rooms" type="button">Filter Rooms</button>
       </form>
+      <hr>
       <div class="booking-scroll">
         <ul class="available-list"></ul>
       </div>
     </section>> 
   `)
   showAvailableRoomInfo(dateSelected);
-  // $('#filter-rooms').click(findFilterChoice);
-  // $('.book-room').click(getRoomToBook)
 }
 
 
@@ -233,11 +243,11 @@ function showAvailableRoomInfo(dateSelected) {
   customer.selectedDateRooms = customer.findAvailableRooms(dateSelected);
   customer.selectedDateRooms.forEach(room => {
     $('.available-list').append(`
-    <h3>Room Number: ${room.number}</h3>
-    <h3>Room Type: ${room.roomType}</h3>
-    <h3>Bed Size: ${room.bedSize}</h3>
-    <h3>Number of Beds: ${room.numBeds}</h3>
-    <h3>Nightly Price: $${room.costPerNight}</h3>
+    <h3 class="room-detail">Room Number: ${room.number}</h3>
+    <h4>Room Type: ${room.roomType}</h4>
+    <h4>Bed Size: ${room.bedSize}</h4>
+    <h4>Number of Beds: ${room.numBeds}</h4>
+    <h4>Nightly Price: $${room.costPerNight}</h4>
     <button class="book-room" type="button" data-number="${room.number}">Book this Room</button>
     `)
   })
