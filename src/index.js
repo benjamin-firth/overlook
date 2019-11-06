@@ -148,8 +148,7 @@ function renderCustomerPage() {
         <input name="calendar" id="datepicker" placeholder="Select a Date"></input>
         <button type="button" id="find-rooms" class="find-rooms">Find Available Rooms</button>
       </form>
-    </section>
-    <button class="login-return">Logout</button>`);
+    </section>`);
     // $('#find-rooms').click(showAvailableRooms);
   addDatePicker();
   showBookings();
@@ -174,8 +173,7 @@ function renderManagerCustomerPage() {
         <input name="calendar" id="datepicker" placeholder="Select a Date"></input>
         <button type="button" id="find-rooms" class="find-rooms">Find Available Rooms</button>
       </form>
-    </section>
-    <button class="login-return">Logout</button>`);
+    </section>`);
     // $('#find-rooms').click(showAvailableRooms);
   addDatePicker();
   showBookings('manager');
