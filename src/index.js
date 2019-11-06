@@ -1,16 +1,7 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// An example of how you import jQuery into a JS file if you use jQuery in that file
 import $ from 'jquery';
-
-// An example of how you tell webpack to use a CSS (SCSS) file
 import './css/base.scss';
 import flatpickr from "flatpickr";
-
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/scooby-doo.jpg'
-
 import Hotel from './Hotel';
 import Manager from './Manager';
 import Customer from './Customer';
@@ -36,7 +27,6 @@ let roomData =
   .then(data => data.rooms)
   .catch(err => console.log(err));
 
-var hotel;
 var manager;
 var customer;
 

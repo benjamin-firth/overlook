@@ -18,13 +18,11 @@ export default class Customer extends Hotel {
 
   findTotalSpent() {
     let myBookings = this.findCustomerBookings(this.id);
-    console.log(myBookings);
     let myBookedRooms = myBookings.map(booking => {
       return this.rooms.find(room => {
         return room.number === booking.roomNumber;
       })
     })
-    console.log('rooms', myBookedRooms);
     return Number(myBookedRooms.reduce((acc, bookedRoom) => {
       acc = acc + bookedRoom.costPerNight
       return acc;
