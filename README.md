@@ -24,3 +24,10 @@ This project uses jQuery, Sass, fetch API, and Webpack.
 
 # Screenshots:
 
+<img width="1440" alt="Screen Shot 2019-11-06 at 7 47 04 AM" src="https://user-images.githubusercontent.com/32349614/68312700-b0287500-0070-11ea-9f50-b464a229ecc5.png">
+
+<img width="1440" alt="Screen Shot 2019-11-06 at 7 47 18 AM" src="https://user-images.githubusercontent.com/32349614/68312772-cb938000-0070-11ea-8416-bdf8ee7cc4ce.png">
+
+<img width="1440" alt="Screen Shot 2019-11-06 at 7 47 34 AM" src="https://user-images.githubusercontent.com/32349614/68312822-db12c900-0070-11ea-8913-d7a46ca379aa.png">
+
+<img width="1440" alt="Screen Shot 2019-11-06 at 7 47 52 AM" src="https://user-images.githubusercontent.com/32349614/68312855-e8c84e80-0070-11ea-94fa-8c209d8edbc5.png">
