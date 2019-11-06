@@ -122,8 +122,18 @@ describe('Hotel Class testing', function() {
       ];
     hotel = new Hotel(dataUsers, dataBookings, dataRooms);
   })
-  
-  
+
+  it('should store user data', function() {
+    expect(hotel.users).to.have.length(5);
+  });
+
+  it('should store booking data', function() {
+    expect(hotel.bookings).to.have.length(6);
+  });
+
+  it('should store room data', function() {
+    expect(hotel.rooms).to.have.length(5);
+  });
   
   it('should return a date', function() {
     expect(hotel.getToday()).to.have.length(10);

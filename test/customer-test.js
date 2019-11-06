@@ -151,15 +151,17 @@ describe('Customer Class testing', function() {
     expect(customer.name).to.equal('Fred');
   })
 
-  it('should show bookings for customer with only date and room number', function() {
+  it('should show bookings for customer', function() {
     expect(customer.findMyBookings()).to.deep.equal(
       [
         {
           date: "2019/11/15",
+          id: 1572293130159,
           roomNumber: 4,
         },
         {
           date: "2019/11/22",
+          id: 1572293130160,
           roomNumber: 1,
         }
       ]
