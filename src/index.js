@@ -27,6 +27,7 @@ let roomData =
   .then(data => data.rooms)
   .catch(err => console.log(err));
 
+var hotel;  
 var manager;
 var customer;
 
