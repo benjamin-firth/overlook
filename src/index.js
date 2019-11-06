@@ -216,9 +216,9 @@ function showBookings(userType) {
   if (userType === 'manager') {
     myBookings.forEach(booking => {
       $('.booking-list').append(`
-      <h2>${booking.date}</h2>
-      <h3>Room ${booking.roomNumber}</h3>
-      <button class="delete-booking">Delete Booking</button>
+      <h2 class="delete-date">${booking.date}</h2>
+      <h3 class="delete-room">Room ${booking.roomNumber}</h3>
+      <button class="delete-booking" data-confirmID="${booking.id}" >Delete Booking</button>
       `)
     })
   } else {
@@ -285,8 +285,14 @@ function getRoomToBook(paramTarget) {
   renderPage();
 }
 
+function getBookingToDelete(paramTarget) {
+  let chosenBookingID = paramTarget.data('confirmID');
+  deleteBooking(chosenBookingID);
+  currentPage = 'Manager Page';
+  renderPage();
+}
+
 function postNewBooking(id, date, room) {
-  console.log(id, date, room);
   fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
     method: 'POST',
     headers: {
@@ -299,6 +305,21 @@ function postNewBooking(id, date, room) {
     })
   })
   .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
+}
+
+function deleteBooking(id) {
+  fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      id: id,
+    })
+  })
+  .then(response => response)
   .then(data => console.log(data))
   .catch(err => console.log(err));
 }
@@ -321,5 +342,8 @@ function fireClickEvents() {
   } else if (event.target.id === 'find-customer-info') {
     let name = $('#customer-name').val();
     goToCustomerInfo(name);
+  } else if ($(event.target).hasClass('delete-booking')) {
+    let paramTarget = $(event.target);
+    getBookingToDelete(paramTarget);
   }
 }
